@@ -101,8 +101,7 @@
 </div>
 
 <script>
-  const BIN_ID = '69d8f90b36566621a89b42ee';
-  const API    = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+  const RAW_URL = 'https://raw.githubusercontent.com/smectplanodeaula-ops/PlanosdeAula/main/url.json?t=' + Date.now();
 
   async function redirecionar() {
     const status  = document.getElementById('status');
@@ -110,12 +109,12 @@
     const btn     = document.getElementById('btn');
 
     try {
-      const res  = await fetch(API);
+      const res = await fetch(RAW_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      const url  = data.record?.url;
+      const url  = data.url;
 
-      if (!url || url.includes('placeholder')) {
+      if (!url || !url.startsWith('https://')) {
         throw new Error('Servidor offline no momento.');
       }
 
